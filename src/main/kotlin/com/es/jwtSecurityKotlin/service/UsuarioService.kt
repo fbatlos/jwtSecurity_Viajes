@@ -3,18 +3,33 @@ package com.es.jwtSecurityKotlin.service
 import com.es.jwtSecurityKotlin.model.Usuario
 import com.es.jwtSecurityKotlin.repository.UsuarioRepository
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.autoconfigure.security.SecurityProperties
+import org.springframework.security.core.userdetails.User
+import org.springframework.security.core.userdetails.UserDetails
+import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.stereotype.Service
 
 @Service
-class UsuarioService {
+class UsuarioService : UserDetailsService {
 
     @Autowired
     private lateinit var usuarioRepository: UsuarioRepository
 
 
     /*
-    TODO
+    TODO VIP
      */
+    override fun loadUserByUsername(username: String?): UserDetails {
+        val usuario:Usuario = usuarioRepository
+            .findByUsername(username!!)
+            .orElseThrow()
+
+        return User.builder()
+            .username(usuario.username)
+            .password(usuario.password)
+            .roles(usuario.roles)
+            .build()
+    }
 
 
     /*
@@ -43,5 +58,7 @@ class UsuarioService {
         return null // Cambiar null por el usuario
 
     }
+
+
 
 }

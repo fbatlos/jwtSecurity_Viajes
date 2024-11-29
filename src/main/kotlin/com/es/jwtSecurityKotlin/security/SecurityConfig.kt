@@ -2,6 +2,7 @@
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpMethod
 import org.springframework.security.config.Customizer
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
@@ -22,6 +23,8 @@ class SecurityConfig {
         return http
             .csrf { it.disable() } //cross-site forgery
             .authorizeHttpRequests { auth -> auth
+                .requestMatchers(HttpMethod.GET,"/rutas_protegidas/recurso1/{id}").permitAll()
+                .requestMatchers(HttpMethod.DELETE,"/rutas_protegidas/recurso1/{id}").hasRole("ADMIN")
                 .requestMatchers("/rutas_protegidas/**").authenticated()
                 .requestMatchers("/secretos_extra_confidenciales/ficha2").permitAll()
                 .requestMatchers("/secretos_extra_confidenciales/**").authenticated()

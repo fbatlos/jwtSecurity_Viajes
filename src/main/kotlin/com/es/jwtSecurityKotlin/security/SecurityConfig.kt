@@ -43,11 +43,6 @@ class SecurityConfig {
             .authorizeHttpRequests { auth -> auth
                 .requestMatchers("/usuarios/register").permitAll()
                 .requestMatchers("/usuarios/login").permitAll()
-                .requestMatchers("/rutas_protegidas/usuario_autenticado").authenticated()
-                .requestMatchers("/rutas_protegidas/eliminar/{nombre}").authenticated()
-                .requestMatchers(HttpMethod.GET,"/rutas_protegidas/recurso1/{id}").hasRole("ADMIN")
-                .requestMatchers("/rutas_protegidas/recurso1").authenticated()
-                .requestMatchers(HttpMethod.DELETE,"/rutas_protegidas/recurso1/{id}").hasRole("ADMIN")
                 .anyRequest().authenticated()
             }//Los recursos protegidos y publicos
             .oauth2ResourceServer { oauth2 -> oauth2.jwt(Customizer.withDefaults())}

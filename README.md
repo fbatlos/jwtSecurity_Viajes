@@ -11,8 +11,8 @@ Implementar seguridad JWT en un proyecto de viajes garantiza la protección de d
 - **Descripción**: Almacena la información de los usuarios.
 - **Columnas**:
   - **Columna 1**: id_usuario(PK).
-  - **Columna 2**: nombre(String).
-  - **Columna 3**: email(String).
+  - **Columna 2**: nombre_usuario(String).
+  - **Columna 3**: contraseña(String).
   - **Columna 4**: teléfono(Int)
   - **Columna 5**: rol (“admin”,”user”)(String).
 

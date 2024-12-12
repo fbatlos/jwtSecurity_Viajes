@@ -15,10 +15,5 @@ class DestinoController {
     @Autowired
     lateinit var destinoService: DestinoService
     //Es un endpoint de ejemplo.
-    @GetMapping("/destino")
-    fun getDestino(
-        authentication: Authentication
-    ): ResponseEntity<Destino?> {
-        return ResponseEntity.ok(null)
-    }
+
 }

@@ -54,7 +54,6 @@ class UsuarioController {
         val authentication: Authentication
         try {
              authentication= authenticationManager.authenticate(UsernamePasswordAuthenticationToken(usuario.username, usuario.password))
-            println(authentication)
         }catch (e: AuthenticationException){
             return ResponseEntity(mapOf("mensaje" to "Credenciales incorrectas dude"), HttpStatus.BAD_REQUEST)
         }
@@ -64,7 +63,7 @@ class UsuarioController {
         //poner try
         token = tokenServices.generarToken(authentication)
 
-        return ResponseEntity(mapOf("token" to token), HttpStatus.CREATED)
+        return ResponseEntity(mapOf("token" to token), HttpStatus.OK)
     }
 
 }

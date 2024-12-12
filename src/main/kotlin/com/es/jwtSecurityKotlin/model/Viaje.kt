@@ -22,11 +22,11 @@ data class Viaje(
     @Column(nullable = false)
     val fecha_Regreso: LocalDate,
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_organizador", nullable = false)
-    val organizador: Usuario,
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_usuario", nullable = false)
+    val usuario: Usuario,
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_destino", nullable = false)
     val destino: Destino
 )

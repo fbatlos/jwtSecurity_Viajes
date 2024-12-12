@@ -43,6 +43,7 @@ class SecurityConfig {
             .authorizeHttpRequests { auth -> auth
                 .requestMatchers("/usuarios/register").permitAll()
                 .requestMatchers("/usuarios/login").permitAll()
+                .requestMatchers("/viajes/destino").authenticated()
                 .anyRequest().authenticated()
             }//Los recursos protegidos y publicos
             .oauth2ResourceServer { oauth2 -> oauth2.jwt(Customizer.withDefaults())}

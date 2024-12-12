@@ -34,3 +34,7 @@ Implementar seguridad JWT en un proyecto de viajes garantiza la protección de d
   - **Columna 3**: pais(String).
   - **Columna 4**: descripción(String).
 
+## Entidad-relaión
+![Modelo entidad relación](src/main/resources/imagenes/Viajes.drawio.png)
+
+

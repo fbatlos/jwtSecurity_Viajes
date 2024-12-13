@@ -33,8 +33,14 @@ class ViajeService {
     //TODO Canbiar null por errores personalizados
 
     fun getViajesPorUsuario(authentication: Authentication): List<Viaje?> {
+        val myViajes: List<Viaje>
 
-        val myViajes = viajeRepository.findByUsuarioUsername(authentication.name).orElseThrow{NotFoundException("Viaje not found")}
+        if (authentication.authorities.any { rol -> rol.authority == "ROLE_ADMIN" }) {
+            myViajes = viajeRepository.findAll()
+        }else{
+            myViajes = viajeRepository.findByUsuarioUsername(authentication.name).orElseThrow{NotFoundException("Viaje not found")}
+        }
+
         return myViajes
     }
 
@@ -100,18 +106,16 @@ class ViajeService {
         val viaje = viajeRepository.findById(idViaje)
             .orElseThrow { NotFoundException("Viaje no encontrado") }
 
-        if (viaje.usuario!!.username != authentication.name && authentication.authorities.any { it.authority.equals("ROLE_ADMIN") }) {
-            throw AccessDeniedException("No puedes eliminar este viaje")
+        if ( !authentication.authorities.any { it.authority.equals("ROLE_ADMIN") }){
+            if (viaje.usuario!!.username != authentication.name) {
+                throw AccessDeniedException("No puedes eliminar este viaje")
+            }
         }
 
         viajeRepository.delete(viaje)
         return "El viaje se ha eliminado con exito"
     }
 
-
-    fun obtenerTodosLosViajes(authentication: Authentication):List<Viaje>{
-        return viajeRepository.findAll()
-    }
 
 
 

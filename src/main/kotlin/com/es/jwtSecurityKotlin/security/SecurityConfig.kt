@@ -43,7 +43,10 @@ class SecurityConfig {
             .authorizeHttpRequests { auth -> auth
                 .requestMatchers("/usuarios/register").permitAll()
                 .requestMatchers("/usuarios/login").permitAll()
-                .requestMatchers(HttpMethod.GET,"/viajes/viajes").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.PUT,"/destinos/{id}").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.DELETE,"/destinos/{id}").hasRole("ADMIN")
+                .requestMatchers("/destinos/destinosposibles").hasRole("ADMIN")
+                .requestMatchers("/destinos/destinos").hasRole("ADMIN")
                 .anyRequest().authenticated()
             }//Los recursos protegidos y publicos
             .oauth2ResourceServer { oauth2 -> oauth2.jwt(Customizer.withDefaults())}

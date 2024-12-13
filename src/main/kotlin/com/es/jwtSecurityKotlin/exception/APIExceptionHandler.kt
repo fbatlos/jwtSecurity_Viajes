@@ -30,4 +30,11 @@ class APIExceptionHandler {
         return ErrorParaCliente(message = e.message, uri = request.requestURI)
     }
 
+    @ExceptionHandler(ConflictoBD::class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ResponseBody//la respuesta va en formato JSON
+    //                      todo lo que viaja   /  la excepttion como tal
+    fun handleConflict(request:HttpServletRequest, e:Exception):ErrorParaCliente{
+        return ErrorParaCliente(message = e.message, uri = request.requestURI)
+    }
 }

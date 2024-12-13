@@ -2,6 +2,7 @@ package com.es.jwtSecurityKotlin.service
 
 import com.es.jwtSecurityKotlin.model.Usuario
 import com.es.jwtSecurityKotlin.repository.UsuarioRepository
+import com.example.unsecuredseguros.exception.ValidationException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.security.SecurityProperties
 import org.springframework.data.repository.findByIdOrNull
@@ -53,15 +54,18 @@ class UsuarioService : UserDetailsService {
             throw ResponseStatusException(HttpStatus.FOUND)
         }
 
-        // Creamos la instancia de Usuario
-
-        val newUser:Usuario = usuario
+       //Hacer util de telefono
 
         /*
          La password del newUsuario debe estar hasheada, así que usamos el passwordEncoder que tenemos definido.
          ¿De dónde viene ese passwordEncoder?
          El objeto passwordEncoder está definido al principio de esta clase.
          */
+        if (usuario.password?.isBlank() == true || usuario.password!!.length < 5 ){
+            throw ValidationException("Password cannot be longer than 5 characters")
+        }
+        val newUser:Usuario = usuario
+
         newUser.password = passwordEncoder.encode(usuario.password)
 
 

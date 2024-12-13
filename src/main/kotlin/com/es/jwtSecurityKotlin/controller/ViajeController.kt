@@ -52,12 +52,4 @@ class ViajeController {
         val viaje = viajeService.eliminarViaje(authentication,id)
         return ResponseEntity<String>(viaje, HttpStatus.OK)
     }
-
-    @GetMapping("/viajes")
-    fun getViajes(
-        authentication: Authentication
-    ): ResponseEntity<List<Viaje>> {
-        val viajes = viajeService.obtenerTodosLosViajes(authentication)
-        return ResponseEntity(viajes, HttpStatus.OK)
-    }
 }

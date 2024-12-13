@@ -7,17 +7,17 @@ import jakarta.persistence.*
 data class Destino(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val idDestino: Long = 0,
+    val idDestino: Long? = null,
 
     @Column(nullable = false, length = 100)
-    val nombre: String,
+    var nombre: String,
 
     @Column(nullable = false, length = 50)
-    val pais: String,
+    var pais: String,
 
     @Column(length = 1000)
-    val descripcion: String? = null,
+    var descripcion: String? = null,
 
     @Column(nullable = false, length = 50)
-    val origen : String
+    var origen : String
 )

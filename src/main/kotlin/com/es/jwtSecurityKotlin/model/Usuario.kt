@@ -19,9 +19,9 @@ data class Usuario(
     @Column(nullable = false)
     var password: String? = null,
 
-    @Column(unique = true, length = 15)
+    @Column(unique = true, length = 9)
     val telefono: String? = null,
 
-    var roles: String? = null // e.g., "ROLE_USER,ROLE_ADMIN"
+    var roles: String = "USER" // e.g., "ROLE_USER,ROLE_ADMIN"
 
 )

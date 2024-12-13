@@ -43,7 +43,7 @@ class SecurityConfig {
             .authorizeHttpRequests { auth -> auth
                 .requestMatchers("/usuarios/register").permitAll()
                 .requestMatchers("/usuarios/login").permitAll()
-                .requestMatchers("/viajes/destino").authenticated()
+                .requestMatchers(HttpMethod.GET,"/viajes/viajes").hasRole("ADMIN")
                 .anyRequest().authenticated()
             }//Los recursos protegidos y publicos
             .oauth2ResourceServer { oauth2 -> oauth2.jwt(Customizer.withDefaults())}

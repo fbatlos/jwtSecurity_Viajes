@@ -9,5 +9,5 @@ import kotlin.collections.List
 
 @Repository
 interface ViajeRepository: JpaRepository<Viaje, Long> {
-     fun findByUsuario(usuario: Usuario): Optional<List<Viaje>>
+     fun findByUsuarioUsername(username:String): Optional<List<Viaje>>
 }

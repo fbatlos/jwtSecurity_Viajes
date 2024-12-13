@@ -64,8 +64,10 @@ class ViajeService {
     fun modificarViaje(authentication: Authentication, viajeDTO: ViajeDTO, idViaje:Long): Viaje {
         //Buscamos el viaje para ver si existe
         val viajebd = viajeRepository.findById(idViaje).orElseThrow { NotFoundException("Viaje no encontrado") }
+
+        println(authentication.authorities)
         //Comprobamos que el viaje sea del usuario
-        if (!viajebd.usuario?.username.equals(authentication.name)) {
+        if (!viajebd.usuario?.username.equals(authentication.name)){
             throw AccessDeniedException("No puedes modificar este viaje");
         }
 
@@ -98,7 +100,7 @@ class ViajeService {
         val viaje = viajeRepository.findById(idViaje)
             .orElseThrow { NotFoundException("Viaje no encontrado") }
 
-        if (viaje.usuario!!.username != authentication.name) {
+        if (viaje.usuario!!.username != authentication.name && authentication.authorities.any { it.authority.equals("ROLE_ADMIN") }) {
             throw AccessDeniedException("No puedes eliminar este viaje")
         }
 

@@ -50,6 +50,6 @@ class ViajeController {
         @PathVariable id: Long
     ):ResponseEntity<String>{
         val viaje = viajeService.eliminarViaje(authentication,id)
-        return ResponseEntity<String>(viaje, HttpStatus.OK)
+        return ResponseEntity<String>(viaje, HttpStatus.NO_CONTENT)
     }
 }

@@ -28,9 +28,9 @@ class DestinoController {
         authentication: Authentication,
         @RequestBody destino: Destino
     ): ResponseEntity<Destino> {
-
+        println(authentication.authorities)
         destinoService.postDestino(destino)
-        return ResponseEntity(destino, HttpStatus.OK)
+        return ResponseEntity(destino, HttpStatus.CREATED)
     }
 
     @PutMapping("/{id}")
@@ -49,7 +49,7 @@ class DestinoController {
         @PathVariable id: Long
     ): ResponseEntity<String> {
         val eliminacion = destinoService.deleteDestino(id)
-        return ResponseEntity(eliminacion, HttpStatus.OK)
+        return ResponseEntity(eliminacion, HttpStatus.NO_CONTENT)
     }
 
 

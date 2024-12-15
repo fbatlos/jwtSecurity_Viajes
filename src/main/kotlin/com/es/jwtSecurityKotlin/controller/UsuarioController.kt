@@ -12,10 +12,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.AuthenticationException
 import org.springframework.security.core.context.SecurityContextHolder
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/usuarios")
@@ -42,6 +39,7 @@ class UsuarioController {
         // -> La obviamos por ahora
         // Llamar al UsuarioService para insertar un usuario
         val usuario = usuarioService.registerUsuario(newUsuario)
+
         // Devolver el usuario insertado
         return ResponseEntity(usuario, HttpStatus.CREATED) // Cambiar null por el usuario insertado
 
@@ -64,6 +62,15 @@ class UsuarioController {
         token = tokenServices.generarToken(authentication)
 
         return ResponseEntity(mapOf("token" to token), HttpStatus.OK)
+    }
+
+    @DeleteMapping("/eliminar/{id}")
+    fun eliminar(
+        authentication: Authentication,
+        @PathVariable id: Long
+    ): ResponseEntity<String> {
+        val eliminado = usuarioService.eliminar(id)
+        return ResponseEntity(eliminado, HttpStatus.NO_CONTENT)
     }
 
 }

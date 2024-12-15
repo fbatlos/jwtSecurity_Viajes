@@ -1,8 +1,4 @@
-﻿package com.example.unsecuredseguros.exception
+﻿package com.es.jwtSecurityKotlin.exception
 
 class ValidationException (message: String)
-    : Exception("Error en la validacion (400). $message") {
-
-
-
-}
+    : Exception("Error en la validacion (400). $message")

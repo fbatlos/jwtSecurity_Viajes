@@ -1,5 +1,6 @@
 ﻿package com.es.jwtSecurityKotlin.service
 
+import com.es.jwtSecurityKotlin.exception.NotFoundException
 import com.es.jwtSecurityKotlin.model.Destino
 import com.es.jwtSecurityKotlin.model.Usuario
 import com.es.jwtSecurityKotlin.model.Viaje
@@ -7,8 +8,6 @@ import com.es.jwtSecurityKotlin.model.ViajeDTO
 import com.es.jwtSecurityKotlin.repository.DestinoRepository
 import com.es.jwtSecurityKotlin.repository.UsuarioRepository
 import com.es.jwtSecurityKotlin.repository.ViajeRepository
-import com.example.unsecuredseguros.exception.NotFoundException
-import jakarta.persistence.EntityNotFoundException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.jpa.domain.AbstractPersistable_.id
 import org.springframework.http.HttpStatus

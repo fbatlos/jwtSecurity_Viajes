@@ -186,3 +186,106 @@ Implementar seguridad JWT en un proyecto de viajes garantiza la protección de d
 
 ### **Control de acceso**
 - Restricciones a nivel de servicio para evitar que un usuario acceda o modifique datos que no le pertenecen.
+
+
+# **Documentación del Proyecto**
+
+## **a. Tecnologías usadas**
+
+### **i. Dependencias incluidas en el proyecto**
+Las dependencias utilizadas en el proyecto son:
+
+1. **Spring Web (WEB):**
+    - Permite construir aplicaciones web, incluyendo RESTful APIs, utilizando **Spring MVC**.
+    - Usa **Apache Tomcat** como servidor embebido para manejar las solicitudes HTTP.
+
+2. **Spring Data JPA (SQL):**
+    - Facilita la persistencia de datos en bases de datos SQL.
+    - Utiliza **Hibernate** como implementador de JPA para mapear objetos Java-Kotlin a tablas de bases de datos.
+
+3. **MySQL Driver (SQL):**
+    - Proporciona el conector JDBC para conectar la aplicación a una base de datos **MySQL**.
+
+4. **Spring Boot DevTools (Developer Tools):**
+    - Ofrece **reinicios rápidos** de la aplicación durante el desarrollo.
+
+---
+
+### **ii. Software utilizado**
+- **IntelliJ IDEA:** IDE utilizado para escribir, compilar y ejecutar la aplicación.
+- **XAMPP:** Herramienta que proporciona un servidor MySQL para gestionar la base de datos.
+- **Insomnia:** Navegador utilizado para probar la API REST mediante solicitudes HTTP.
+- **MySQL Database:** Sistema de gestión de bases de datos SQL para almacenar la información de la aplicación.
+- **Spring Boot:** Framework principal utilizado para el desarrollo de la API REST, que facilita la creación de aplicaciones Java independientes y listas para producción.
+
+---
+
+### **iii. Descripción de las tecnologías y su propósito**
+- **Spring Boot:** Framework de desarrollo para aplicaciones Java-Kotlin, que facilita la configuración y despliegue de aplicaciones web, RESTful APIs y microservicios.
+- **Spring Web:** Proporciona los componentes necesarios para manejar solicitudes HTTP y construir endpoints RESTful.
+- **Spring Data JPA:** Simplifica las operaciones de base de datos al abstraer la lógica repetitiva mediante repositorios.
+- **MySQL Driver:** Permite la conexión de la aplicación con la base de datos MySQL.
+- **XAMPP:** Sirve para ejecutar un servidor MySQL local donde se aloja la base de datos.
+- **Spring Boot DevTools:** Herramienta que mejora la experiencia del desarrollador con recargas rápidas durante el desarrollo.
+
+---
+
+## **b. API REST y principios**
+
+### **¿Qué es una API REST?**
+Una **API REST (Representational State Transfer)** es un conjunto de reglas que permite a diferentes sistemas comunicarse a través de solicitudes HTTP. Utiliza métodos estándar como GET, POST, PUT y DELETE para interactuar con recursos.
+
+---
+
+### **Principios de una API REST**
+1. **Cliente-Servidor:**
+    - El cliente (frontend o consumidor) y el servidor (backend) están separados y pueden evolucionar independientemente.
+    - **Ejemplo:** El servidor provee los endpoints (`/usuarios`, `/viajes`), mientras que un cliente (Insomnia o navegador) los consume.
+
+2. **Stateless (Sin estado):**
+    - Cada solicitud HTTP contiene toda la información necesaria para procesarla sin depender de sesiones en el servidor.
+    - **Ejemplo:** Cada petición de login envía usuario y contraseña independientemente.
+
+3. **Uniform Interface (Interfaz uniforme):**
+    - El uso de recursos debe seguir estándares. Los endpoints deben ser **predecibles** y usar verbos HTTP adecuados.
+    - **Ejemplo:**
+        - `GET /usuarios` -> Obtener todos los usuarios.
+        - `POST /usuarios/register` -> Registrar un usuario.
+
+4. **Layered System (Sistema por capas):**
+    - El cliente no necesita saber cómo está estructurado internamente el servidor.
+    - **Ejemplo:** Separación de controladores, servicios y repositorios en tu código.
+
+5. **Code on Demand (Opcional):**
+    - El servidor puede enviar código ejecutable al cliente (poco común en APIs REST básicas).
+
+---
+
+### **Implementación de estos principios**
+- **Cliente-Servidor:** La separación entre el cliente (Insomnia o navegador) y tu servidor en Spring Boot.
+- **Stateless:** Cada petición HTTP en tu API (ej. login) es independiente. No guardas estados de sesión.
+- **Uniform Interface:** Los endpoints siguen una estructura clara y usan métodos HTTP estándar (ej. `POST /register`, `DELETE /eliminar/{id}`).
+- **Layered System:** Separación de lógica en controladores, servicios y repositorios en el proyecto.
+
+---
+
+## **c. Ventajas de la separación entre cliente y servidor**
+1. **Independencia:**
+    - Cliente y servidor pueden desarrollarse y escalarse de forma independiente.
+    - **Ejemplo:** Puedes cambiar el frontend sin modificar el backend.
+
+2. **Reutilización del servidor:**
+    - El servidor puede servir a múltiples clientes (web, móviles, etc.).
+    - **Ejemplo:** La misma API REST puede ser consumida por una aplicación móvil y una web.
+
+3. **Mejor mantenimiento:**
+    - Facilita la depuración y el mantenimiento porque la lógica está separada.
+
+4. **Escalabilidad:**
+    - Cada parte del sistema puede ser escalada independientemente. Por ejemplo, puedes escalar solo el servidor si hay más tráfico.
+
+5. **Flexibilidad tecnológica:**
+    - El cliente puede usar tecnologías distintas (React, Vue.js, Postman) mientras que el servidor puede estar en **Spring Boot**.
+
+---
+

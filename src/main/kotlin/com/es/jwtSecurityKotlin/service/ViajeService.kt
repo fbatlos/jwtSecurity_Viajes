@@ -1,5 +1,6 @@
 ﻿package com.es.jwtSecurityKotlin.service
 
+import com.es.jwtSecurityKotlin.Utils.Utils
 import com.es.jwtSecurityKotlin.exception.ConflictoBD
 import com.es.jwtSecurityKotlin.exception.NotFoundException
 import com.es.jwtSecurityKotlin.model.Destino
@@ -59,6 +60,8 @@ class ViajeService {
 
         val destino = destinoRepository.findById(viajeDTO.destinoId)
             .orElseThrow { NotFoundException("Destino no encontrado") }
+        
+        Utils.validarFechas(viajeDTO.fecha_Ida,viajeDTO.fecha_Regreso)
 
         // Crear el objeto Viaje y asociarlo con el usuario autenticado
         val viaje = fromDto(viajeDTO, usuario, destino)
@@ -74,7 +77,7 @@ class ViajeService {
         println(authentication.authorities)
         //Comprobamos que el viaje sea del usuario
         if (!viajebd.usuario?.username.equals(authentication.name)){
-            throw AccessDeniedException("No puedes modificar este viaje");
+            throw AccessDeniedException("No puedes modificar este viaje ya que no es tuyo");
         }
 
         val destino = destinoRepository.findById(viajeDTO.destinoId)
@@ -89,6 +92,8 @@ class ViajeService {
                 }
             }
         }
+
+        Utils.validarFechas(viajeDTO.fecha_Ida,viajeDTO.fecha_Regreso)
 
         viajebd.titulo = viajeDTO.titulo
         viajebd.descripcion = viajeDTO.descripcion

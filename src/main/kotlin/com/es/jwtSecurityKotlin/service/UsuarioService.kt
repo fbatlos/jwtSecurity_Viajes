@@ -18,6 +18,7 @@ import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
+import org.springframework.web.client.HttpClientErrorException.BadRequest
 import org.springframework.web.server.ResponseStatusException
 
 @Service
@@ -62,7 +63,7 @@ class UsuarioService : UserDetailsService {
         // Comprobamos que el usuario no existe en la base de datos
         usuario.username ?:  throw ValidationException("Es necesario un nombre")
         if(usuarioRepository.findByUsername(usuario.username!!).isPresent) {
-            throw NotFoundException("El usuario ya existe.")
+            throw ValidationException("El usuario ya existe.")
         }
 
        //Hacer util de telefono

@@ -17,9 +17,8 @@ class DestinoController {
 
     @GetMapping("/destinosposibles")
     fun destinosPosibles(
-        authentication: Authentication
     ): ResponseEntity<List<Destino>> {
-        val destinos =  destinoService.getDestinos(authentication)
+        val destinos =  destinoService.getDestinos()
         return ResponseEntity(destinos, HttpStatus.OK)
     }
 

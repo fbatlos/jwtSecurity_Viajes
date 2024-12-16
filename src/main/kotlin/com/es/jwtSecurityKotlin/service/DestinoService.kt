@@ -20,7 +20,7 @@ class DestinoService {
 
     //TODO Canbiar null por errores personalizados
 
-    fun getDestinos(authentication: Authentication): List<Destino> {
+    fun getDestinos(): List<Destino> {
         return  destinoRepository.findAll()
     }
 

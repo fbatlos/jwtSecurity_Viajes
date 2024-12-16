@@ -44,11 +44,11 @@ class SecurityConfig {
                 .requestMatchers(HttpMethod.PUT,"/destinos/{id}").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.DELETE,"/destinos/{id}").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.POST,"/destinos/destino").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.DELETE,"/usuarios/eliminar/").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.DELETE,"/usuarios/eliminar/{id}").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.GET,"/usuarios/usuarios").hasRole("ADMIN")
                 .requestMatchers("/usuarios/register").permitAll()
                 .requestMatchers("/usuarios/login").permitAll()
-                .requestMatchers("/destinos/destinosposibles").permitAll()
+                .requestMatchers(HttpMethod.GET,"/destinos/destinosposibles").permitAll()
                 .anyRequest().authenticated()
             }//Los recursos protegidos y publicos
             .oauth2ResourceServer { oauth2 -> oauth2.jwt(Customizer.withDefaults())}

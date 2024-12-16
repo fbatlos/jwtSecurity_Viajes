@@ -48,14 +48,14 @@ Implementar seguridad JWT en un proyecto de viajes garantiza la protección de d
 4. **DELETE /usuarios/eliminar/{id}**: Eliminar un usuario por su ID (con restricciones específicas).
 
 #### **Viajes**
-1. **GET /viajes**: Obtener todos los viajes del usuario autenticado.
+1. **GET /mis-viajes**: Obtener todos los viajes del usuario autenticado.
 2. **POST /viajes**: Crear un nuevo viaje asociado al usuario autenticado.
 3. **PUT /viajes/{id}**: Actualizar un viaje por su ID (solo si pertenece al usuario autenticado).
 4. **DELETE /viajes/{id}**: Eliminar un viaje por su ID (solo si pertenece al usuario autenticado).
 
 #### **Destinos**
-1. **GET /destinos**: Listar todos los destinos disponibles.
-2. **POST /destinos**: Crear un nuevo destino (solo accesible para administradores).
+1. **GET /destinosposibles**: Listar todos los destinos disponibles.
+2. **POST /destino**: Crear un nuevo destino (solo accesible para administradores).
 3. **PUT /destinos/{id}**: Actualizar un destino por su ID (solo accesible para administradores).
 4. **DELETE /destinos/{id}**: Eliminar un destino por su ID (solo accesible para administradores y si no está asociado a ningún viaje).
 
@@ -113,16 +113,20 @@ Implementar seguridad JWT en un proyecto de viajes garantiza la protección de d
 ### **Usuarios**
 - La contraseña debe ser hasheada antes de guardarla.
 - No se puede registrar un usuario con un nombre de usuario que ya exista.
+- La contraseña deberá ser mayor 5 caracteres.
+- Se ha creado un metedo para poder validar el formato de los telefonos.
 - Un usuario no puede ser eliminado si:
   - Es un administrador.
   - Está asociado a uno o más viajes.
 
 ### **Viajes**
 - Un usuario solo puede gestionar (crear, modificar, eliminar) sus propios viajes.
+- Un administrador podrá ver todos los viajes y podrá eliminar cualquier viaje.
 - No se puede asociar un viaje a un destino que ya tenga otro viaje asociado para el mismo usuario.
 
 ### **Destinos**
 - Solo los administradores pueden crear, actualizar o eliminar destinos.
+- Todos los usuarios pueden ver todos los destinos.
 - No se puede eliminar un destino si está asociado a uno o más viajes.
 
 ---

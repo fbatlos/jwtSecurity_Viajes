@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseStatus
 class APIExceptionHandler {
 
 
-    @ExceptionHandler(IllegalArgumentException::class , NumberFormatException::class, ValidationException::class , AccessDeniedException::class )
+    @ExceptionHandler(IllegalArgumentException::class , NumberFormatException::class, ValidationException::class )
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody//la respuesta va en formato JSON
     //                      todo lo que viaja   /  la excepttion como tal
@@ -21,6 +21,12 @@ class APIExceptionHandler {
         return ErrorParaCliente(message = e.message, uri = request.requestURI)
     }
 
+    @ExceptionHandler(AccessDeniedException::class )
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ResponseBody//la respuesta va en formato JSON
+    fun handleForbidden(request:HttpServletRequest, e:Exception):ErrorParaCliente{
+        return ErrorParaCliente(message = e.message, uri = request.requestURI)
+    }
 
     @ExceptionHandler(NotFoundException::class , EntityNotFoundException::class)
     @ResponseStatus(HttpStatus.NOT_FOUND)

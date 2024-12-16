@@ -64,6 +64,14 @@ class UsuarioController {
         return ResponseEntity(mapOf("token" to token), HttpStatus.OK)
     }
 
+    @GetMapping("/usuarios")
+    fun usuarios(
+        authentication: Authentication
+    ): ResponseEntity<List<Usuario?>?>? {
+        val usuarios = usuarioService.allUsers()
+        return ResponseEntity(usuarios, HttpStatus.OK)
+    }
+
     @DeleteMapping("/eliminar/{id}")
     fun eliminar(
         authentication: Authentication,

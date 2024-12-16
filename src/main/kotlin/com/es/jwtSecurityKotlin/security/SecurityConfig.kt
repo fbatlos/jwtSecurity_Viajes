@@ -45,6 +45,7 @@ class SecurityConfig {
                 .requestMatchers(HttpMethod.DELETE,"/destinos/{id}").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.POST,"/destinos/destino").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.DELETE,"/usuarios/eliminar/").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.GET,"/usuarios/usuarios").hasRole("ADMIN")
                 .requestMatchers("/usuarios/register").permitAll()
                 .requestMatchers("/usuarios/login").permitAll()
                 .requestMatchers("/destinos/destinosposibles").permitAll()

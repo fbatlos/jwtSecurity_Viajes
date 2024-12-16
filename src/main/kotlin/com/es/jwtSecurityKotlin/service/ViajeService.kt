@@ -1,5 +1,6 @@
 ﻿package com.es.jwtSecurityKotlin.service
 
+import com.es.jwtSecurityKotlin.exception.ConflictoBD
 import com.es.jwtSecurityKotlin.exception.NotFoundException
 import com.es.jwtSecurityKotlin.model.Destino
 import com.es.jwtSecurityKotlin.model.Usuario
@@ -46,13 +47,13 @@ class ViajeService {
 
     fun postViaje(authentication: Authentication, viajeDTO: ViajeDTO): Viaje {
         val usuario = usuarioRepository.findByUsername(authentication.name)
-            .orElseThrow { RuntimeException("Usuario no encontrado") }
+            .orElseThrow { NotFoundException("Usuario no encontrado") }
 
         // Verificar si el destino ya está asociado con un viaje del usuario
         val myViajes = viajeRepository.findByUsuarioUsername(authentication.name).orElseThrow{NotFoundException("Viaje not found")}
         myViajes.forEach { myviaje ->
             if (myviaje.destino.idDestino == viajeDTO.destinoId) {
-                throw ResponseStatusException(HttpStatus.FORBIDDEN, "El usuario ya tiene un viaje al mismo destino")
+                throw ConflictoBD( "El usuario ya tiene un viaje al mismo destino")
             }
         }
 
@@ -84,7 +85,7 @@ class ViajeService {
             val myViajes = viajeRepository.findByUsuarioUsername(authentication.name).get()
             myViajes.forEach { myviaje ->
                 if (myviaje.destino.idDestino == viajeDTO.destinoId) {
-                    throw ResponseStatusException(HttpStatus.FORBIDDEN, "El usuario ya tiene un viaje al mismo destino")
+                    throw ConflictoBD("El usuario ya tiene un viaje al mismo destino")
                 }
             }
         }

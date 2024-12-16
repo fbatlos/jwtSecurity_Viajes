@@ -37,4 +37,152 @@ Implementar seguridad JWT en un proyecto de viajes garantiza la protección de d
 ## Entidad-relaión
 ![Modelo entidad relación](src/main/resources/imagenes/Viajes.drawio.png)
 
+## API REST Documentation
 
+### **a. Endpoints a desarrollar para cada tabla**
+
+#### **Usuarios**
+1. **POST /usuarios/register**: Registrar un nuevo usuario.
+2. **POST /usuarios/login**: Autenticar un usuario y generar un token JWT.
+3. **GET /usuarios**: Listar todos los usuarios (solo accesible para administradores).
+4. **DELETE /usuarios/eliminar/{id}**: Eliminar un usuario por su ID (con restricciones específicas).
+
+#### **Viajes**
+1. **GET /mis-viajes**: Obtener todos los viajes del usuario autenticado.
+2. **POST /viajes**: Crear un nuevo viaje asociado al usuario autenticado.
+3. **PUT /viajes/{id}**: Actualizar un viaje por su ID (solo si pertenece al usuario autenticado).
+4. **DELETE /viajes/{id}**: Eliminar un viaje por su ID (solo si pertenece al usuario autenticado).
+
+#### **Destinos**
+1. **GET /destinosposibles**: Listar todos los destinos disponibles.
+2. **POST /destino**: Crear un nuevo destino (solo accesible para administradores).
+3. **PUT /destinos/{id}**: Actualizar un destino por su ID (solo accesible para administradores).
+4. **DELETE /destinos/{id}**: Eliminar un destino por su ID (solo accesible para administradores y si no está asociado a ningún viaje).
+
+---
+
+## **b. Descripción de los endpoints**
+
+### **Usuarios**
+1. **POST /usuarios/register**  
+   Registrar un nuevo usuario. El usuario envía un JSON con los datos requeridos (nombre de usuario, contraseña, teléfono, etc.). La contraseña se hashea antes de almacenarse.
+
+2. **POST /usuarios/login**  
+   Autenticar al usuario mediante su nombre de usuario y contraseña. Si las credenciales son correctas, se devuelve un token JWT.
+
+3. **GET /usuarios**  
+   Devuelve una lista de todos los usuarios. Este endpoint está restringido a administradores.
+
+4. **DELETE /usuarios/eliminar/{id}**  
+   Elimina un usuario por su ID. No se puede eliminar si el usuario tiene el rol "ADMIN" o si está asociado a viajes.
+
+---
+
+### **Viajes**
+1. **GET /viajes**  
+   Devuelve todos los viajes asociados al usuario autenticado.
+
+2. **POST /viajes**  
+   Crea un nuevo viaje. El viaje queda asociado automáticamente al usuario autenticado.
+
+3. **PUT /viajes/{id}**  
+   Permite actualizar un viaje existente. Solo es accesible si el viaje pertenece al usuario autenticado.
+
+4. **DELETE /viajes/{id}**  
+   Permite eliminar un viaje existente. Solo es accesible si el viaje pertenece al usuario autenticado.
+
+---
+
+### **Destinos**
+1. **GET /destinos**  
+   Devuelve una lista de todos los destinos disponibles.
+
+2. **POST /destinos**  
+   Permite crear un nuevo destino. Solo accesible para usuarios con el rol "ADMIN".
+
+3. **PUT /destinos/{id}**  
+   Permite actualizar un destino por su ID. Solo accesible para administradores.
+
+4. **DELETE /destinos/{id}**  
+   Permite eliminar un destino por su ID. El destino no puede ser eliminado si está asociado a viajes. Solo accesible para administradores.
+
+---
+
+## **c. Lógica de negocio de la aplicación**
+
+### **Usuarios**
+- La contraseña debe ser hasheada antes de guardarla.
+- No se puede registrar un usuario con un nombre de usuario que ya exista.
+- La contraseña deberá ser mayor 5 caracteres.
+- Se ha creado un metedo para poder validar el formato de los telefonos.
+- Un usuario no puede ser eliminado si:
+  - Es un administrador.
+  - Está asociado a uno o más viajes.
+
+### **Viajes**
+- Un usuario solo puede gestionar (crear, modificar, eliminar) sus propios viajes.
+- Un administrador podrá ver todos los viajes y podrá eliminar cualquier viaje.
+- No se puede asociar un viaje a un destino que ya tenga otro viaje asociado para el mismo usuario.
+
+### **Destinos**
+- Solo los administradores pueden crear, actualizar o eliminar destinos.
+- Todos los usuarios pueden ver todos los destinos.
+- No se puede eliminar un destino si está asociado a uno o más viajes.
+
+---
+
+## **d. Excepciones y códigos de estado**
+
+### **Usuarios**
+- **400 Bad Request**: 
+  - Datos de registro inválidos (por ejemplo, contraseña demasiado corta).
+  - Intento de eliminar un usuario no válido.
+- **401 Unauthorized**: 
+  - Usuario no autenticado.
+- **403 Forbidden**: 
+  - Intento de acceder o realizar una acción restringida a administradores.
+- **404 Not Found**: 
+  - Usuario no encontrado al intentar eliminarlo.
+- **409 Conflict**: 
+  - Intento de eliminar un usuario con rol "ADMIN" o asociado a viajes.
+
+### **Viajes**
+- **400 Bad Request**: 
+  - Datos de viaje inválidos (por ejemplo, fechas incoherentes).
+- **401 Unauthorized**: 
+  - Usuario no autenticado.
+- **403 Forbidden**: 
+  - Intento de acceder, actualizar o eliminar un viaje que no pertenece al usuario autenticado.
+- **404 Not Found**: 
+  - Viaje no encontrado.
+- **409 Conflict**: 
+  - Intento de asociar un viaje a un destino ya ocupado por el mismo usuario.
+
+### **Destinos**
+- **401 Unauthorized**: 
+  - Usuario no autenticado.
+- **403 Forbidden**: 
+  - Intento de crear, actualizar o eliminar un destino sin ser administrador.
+- **404 Not Found**: 
+  - Destino no encontrado.
+- **409 Conflict**: 
+  - Intento de eliminar un destino asociado a viajes.
+
+---
+
+## **e. Restricciones de seguridad**
+
+### **Autenticación**
+- Todos los endpoints requieren autenticación mediante JWT, excepto los de registro y login.
+- Los tokens tienen una duración limitada y deben renovarse mediante login.
+
+### **Autorización**
+- Solo los administradores tienen acceso a la gestión completa de usuarios y destinos.
+- Los usuarios solo pueden gestionar sus propios viajes.
+
+### **Validación de datos**
+- Las entradas del cliente se validan para evitar inyecciones de datos o errores en las reglas de negocio.
+- Se valida el formato del teléfono al registrar usuarios.
+
+### **Control de acceso**
+- Restricciones a nivel de servicio para evitar que un usuario acceda o modifique datos que no le pertenecen.

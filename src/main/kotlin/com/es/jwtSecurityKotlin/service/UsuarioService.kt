@@ -50,6 +50,10 @@ class UsuarioService : UserDetailsService {
     }
 
 
+    fun allUsers(): List<Usuario> {
+        return usuarioRepository.findAll()
+    }
+
     /*
     MÉTODO PARA INSERTAR UN USUARIO
      */
